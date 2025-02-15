@@ -1,0 +1,36 @@
+local LOVElyTests = require("LOVElyTests")
+
+function love.load() 
+    LOVElyTests.register("Test 1", function(test_case)
+        test_case("Subtest 1", function(test_case)
+            test_case("Test 1", function ()
+                assert(true)
+            end)
+
+            test_case("Test 2", function ()
+                assert(false, "This is a failure")
+            end)
+        end)
+        test_case("Subtest 2", function(test_case)
+            assert(true)
+        end)
+    end)
+
+    LOVElyTests.register("Nested Test", function(test_case)
+        test_case("Level 1", function(test_case)
+            test_case("Level 2", function(test_case)
+                test_case("Level 3", function(test_case)
+                    test_case("Level 4", function()
+                        assert(true, "Deep level passed")
+                    end)
+
+                    test_case("Level 4", function()
+                        assert(false, "Deep level failed")
+                    end)
+                end)
+            end)
+        end)
+    end)
+
+    LOVElyTests.run_all()
+end
